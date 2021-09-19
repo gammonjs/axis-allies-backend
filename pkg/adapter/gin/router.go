@@ -25,20 +25,10 @@ func (router Router) Handler(handler func(api.Context)) adaptee.HandlerFunc {
 	}
 }
 
-func (router Router) Use(middleware ...func(api.Context)) {
-	var adaptees []adaptee.HandlerFunc
-	for _, handler := range middleware {
-		adaptees = append(adaptees, router.Handler(handler))
-	}
-
-	router.Adaptee.Use(adaptees...)
+func (router Router) Use(middleware func(api.Context)) {
+	router.Adaptee.Use(router.Handler(middleware))
 }
 
-func (router Router) Get(relativePath string, middleware ...func(api.Context)) {
-	var adaptees []adaptee.HandlerFunc
-	for _, handler := range middleware {
-		adaptees = append(adaptees, router.Handler(handler))
-	}
-
-	router.Adaptee.GET(relativePath, adaptees...)
+func (router Router) Get(relativePath string, handler func(api.Context)) {
+	router.Adaptee.GET(relativePath, router.Handler(handler))
 }

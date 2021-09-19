@@ -3,6 +3,7 @@ package application
 import (
 	"axis-allies-backend/pkg/contracts/utility"
 	"axis-allies-backend/pkg/contracts/web/api"
+	"axis-allies-backend/pkg/handler"
 	"context"
 	"net/http"
 	"os/signal"
@@ -22,6 +23,9 @@ func (server Server) ListenAndServe() {
 		Addr:    "localhost:8080",
 		Handler: server.Router,
 	}
+
+	home := &handler.Home{}
+	server.Router.Get("/", home.Handler)
 
 	go func() {
 		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {

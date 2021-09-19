@@ -10,7 +10,7 @@ import (
 
 func Router() {
 	container.Transient(func() api.Router {
-		return Mux()
+		return Gin()
 	})
 }
 
