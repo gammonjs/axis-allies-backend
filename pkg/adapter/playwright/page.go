@@ -20,3 +20,7 @@ func (self Page) Goto(url string) (browser.Response, error) {
 
 	return &Response{Adaptee: response}, nil
 }
+
+func (page Page) EvalOnSelectorAll(selector string, expression string, options ...interface{}) (interface{}, error) {
+	return page.Adaptee.EvalOnSelectorAll(selector, expression, options...)
+}
