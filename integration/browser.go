@@ -27,24 +27,16 @@ func (factory FixtureFactory) Create() *Fixture {
 
 	registry.Utility()
 
-	var configuration utility.Configuration
-	container.Bind(&configuration)
-
-	var log utility.Logger
-	container.Bind(&log)
-
-	if err := configuration.Configure(); err != nil {
-		log.Error(err.Error())
-		return nil
+	fixture := &Fixture{
+		Driver:   driver,
+		Instance: browser,
+		Context:  context,
 	}
 
-	return &Fixture{
-		Configuration: configuration,
-		Log:           log,
-		Driver:        driver,
-		Instance:      browser,
-		Context:       context,
-	}
+	container.Bind(&fixture.Configuration)
+	container.Bind(&fixture.Log)
+
+	return fixture
 }
 
 func Cleanup(fixture *Fixture) {
