@@ -8,5 +8,6 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/mxschmitt/playwright-go v0.1400.0
 	github.com/sirupsen/logrus v1.8.1
+	github.com/spf13/viper v1.8.1
 	github.com/stretchr/testify v1.7.0
 )

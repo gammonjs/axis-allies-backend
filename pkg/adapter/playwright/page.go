@@ -2,6 +2,7 @@ package playwright
 
 import (
 	"axis-allies-backend/pkg/contracts/web/browser"
+	"fmt"
 
 	adaptee "github.com/mxschmitt/playwright-go"
 )
@@ -21,6 +22,7 @@ func (self Page) Goto(url string) (browser.Response, error) {
 	return &Response{Adaptee: response}, nil
 }
 
-func (page Page) EvalOnSelectorAll(selector string, expression string, options ...interface{}) (interface{}, error) {
-	return page.Adaptee.EvalOnSelectorAll(selector, expression, options...)
+func (page Page) Text(text string) (interface{}, error) {
+	selector := fmt.Sprintf("text=%s", text)
+	return page.Adaptee.EvalOnSelectorAll(selector, "el => el.length")
 }

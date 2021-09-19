@@ -12,6 +12,7 @@ func Server() {
 		server := &application.Server{}
 		container.Bind(&server.Router)
 		container.Bind(&server.Log)
+		container.Bind(&server.Configuration)
 		return server
 	})
 }

@@ -12,15 +12,16 @@ import (
 )
 
 type Server struct {
-	Router api.Router
-	Log    utility.Logger
+	Router        api.Router
+	Configuration utility.Configuration
+	Log           utility.Logger
 }
 
 func (server Server) ListenAndServe() {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 
 	httpServer := &http.Server{
-		Addr:    "localhost:8080",
+		Addr:    server.Configuration.ServerUrl(),
 		Handler: server.Router,
 	}
 

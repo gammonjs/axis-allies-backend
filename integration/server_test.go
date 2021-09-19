@@ -1,6 +1,7 @@
 package integration
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -14,13 +15,15 @@ func TestHomePage(t *testing.T) {
 	defer Cleanup(fixture)
 
 	// arrange
+	render := "{\"Hello\":\"World\"}"
+	expected := 1
 	page, _ := fixture.Context.NewPage()
 
 	// act
-	page.Goto("localhost:8080")
-	count, err := page.EvalOnSelectorAll("text={\"Hello\":\"World\"}", "el => el.length")
+	page.Goto(fixture.Configuration.ServerUrl())
+	actual, err := page.Text(render)
 
 	// assert
 	assert.Equal(t, err, nil)
-	assert.Equal(t, count, 1)
+	assert.Equal(t, actual, expected, fmt.Sprintf("expected the following page render: %s", render))
 }
